@@ -24,7 +24,6 @@ public class OfyService {
     public static Objectify ofy() {
         return ObjectifyService.ofy();
     }
-
     /**
      * Use this static method for getting the Objectify service factory.
      * @return ObjectifyFactory.
