@@ -1,5 +1,9 @@
 package com.google.devrel.training.conference.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.appengine.repackaged.com.google.common.collect.ImmutableList;
 import com.google.devrel.training.conference.form.ProfileForm.TeeShirtSize;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
@@ -13,6 +17,7 @@ public class Profile {
 	String mainEmail;
 	TeeShirtSize teeShirtSize;
 
+	
 	// TODO indicate that the userId is to be used in the Entity's key
 	@Id	String userId;
     
@@ -29,6 +34,7 @@ public class Profile {
     	this.displayName = displayName;
     	this.mainEmail = mainEmail;
     	this.teeShirtSize = teeShirtSize;
+    	
     }
     
     
@@ -48,6 +54,29 @@ public class Profile {
 		return userId;
 	}
 	
+	// List of conferences the user has registered to attend
+	private List<String> conferenceKeysToAttend = new ArrayList<>(0);
+
+	public List<String> getConferenceKeysToAttend() {
+	        return ImmutableList.copyOf(conferenceKeysToAttend);
+	    }
+	    
+	    public void addToConferenceKeysToAttend(String conferenceKey) {
+	        conferenceKeysToAttend.add(conferenceKey);
+	    }
+	    
+	    /**
+	     * Remove the conferenceId from conferenceIdsToAttend.
+	     *
+	     * @param conferenceKey a websafe String representation of the Conference Key.
+	     */
+	    public void unregisterFromConference(String conferenceKey) {
+	        if (conferenceKeysToAttend.contains(conferenceKey)) {
+	            conferenceKeysToAttend.remove(conferenceKey);
+	        } else {
+	            throw new IllegalArgumentException("Invalid conferenceKey: " + conferenceKey);
+	        }
+	    }
 	public void update (String displayName, TeeShirtSize teeShirtSize){
 		if(displayName != null){
 			this.displayName = displayName;
