@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+  <cron>
+    <url>/crons/set_announcement</url>
+    <target>beta</target>
+    <description>Mail out a daily report</description>
+    <schedule>every 24 hours</schedule>
+  </cron>
+</cronentries>
